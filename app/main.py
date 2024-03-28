@@ -177,13 +177,13 @@ def add_predictions(input_data):
 
     prediction = model.predict(input_array_scaled)
 
-    st.subheader("CellCluster Prediction")
+    st.subheader("Cell Cluster Prediction")
     st.write("The Cell Cluster is: ")
 
     if prediction[0] == 0:
-        st.write("Benign")
+        st.write("<span class='diagnosis benign'>Benign</span>", unsafe_allow_html=True)
     else:
-        st.write("Malicious")
+        st.write("<span class='diagnosis malicious'>Malicious</span>", unsafe_allow_html=True)
 
     st.write("Probability of being Benign:", model.predict_proba(input_array_scaled)[0][0])
     st.write("Probability of being Malicious:", model.predict_proba(input_array_scaled)[0][1])
@@ -198,6 +198,9 @@ def main():
         layout="wide",
         initial_sidebar_state="expanded",
     )
+
+    with open('assets/style.css') as f:
+        st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 
     input_data = add_sidebar()
 
